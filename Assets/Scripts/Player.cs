@@ -68,3 +68,37 @@ public class Player : MonoBehaviour
     );
     }
 }
+
+public void OnTriggerEnter2D(Collider2D whatDidIHit)
+{
+    if (whatDidIHit.tag == "shield")
+    {
+        Destroy(gameObject: whatDidIHit.gameObject);
+        int whichPowerup = Random.Range(1, 5);
+        GameManager.PlaySound(1);
+        switch (whichPowerup)
+        {
+            case 1:
+                //Picked up speed
+                speed = 10f;
+                StartCoroutine(SpeedPowerDown());
+                thrusterPrefab.SetActive(true);
+                GameManager.ManagePowerupText(1);
+                break;
+            case 2:
+                //Picked up shield
+                //Do I already have a shield?
+                //If yes: do nothing
+                //If not: activate the shield's visibility
+                GameManager.ManagePowerupText(4);
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+void Destroy(GameObject gameObject)
+{
+    throw new System.NotImplementedException();
+}
