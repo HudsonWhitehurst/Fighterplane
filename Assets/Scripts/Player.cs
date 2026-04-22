@@ -13,6 +13,8 @@ public class Player : MonoBehaviour
     public GameObject shieldObject;
     public AudioClip powerupSound;
     public AudioClip powerdownSound;
+    public AudioClip coinSound;
+
 
     private bool shieldActive = false;
     private AudioSource audioSource;
@@ -72,6 +74,17 @@ public class Player : MonoBehaviour
                 StartCoroutine(ShieldTimer());
             }
         }
+        else if (whatDidIHit.tag == "Coin")
+        {
+            Destroy(whatDidIHit.gameObject);
+            GameManager gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+            gm.UpdateScore(1);
+
+            if (audioSource !=null)
+                audioSource.PlayOneShot(coinSound);
+        }
+
+
     }
 
     IEnumerator ShieldTimer()
